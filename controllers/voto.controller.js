@@ -44,6 +44,7 @@ exports.voterRegister = async (req, res, next) => {
       res.json({
         voto: true
       });
+      // res.redirect("/charts");
     } else {
       //Si el objeto retorna "false" es porque no se agregó correctamente
       res.json({
@@ -135,15 +136,19 @@ exports.stactistics = async (req, res, next) => {
         }
       }
       //Llenamos el array con las estadisticas
+      let percent = (cont / votos.length) * 100;
       estadisticas.push({
         partido,
         partidoId: partido._id.toString(), //ID del partido
         total_votos: cont, //Los votos de ese partido
-        porcentaje: Math.round((cont / votos.length) * 100), //Sacamos el porcentaje de votos de ese candidato
+        porcentaje: percent.toFixed(2), //Sacamos el porcentaje de votos de ese candidato
         total: votos.length //La cantidad de votos total de todos los partidos
       });
     }
     //Retornamos el array estadísticas
+
+    estadisticas.sort((a, b) => b.total_votos - a.total_votos);
+
     res.json(estadisticas);
     next();
   } catch (err) {
