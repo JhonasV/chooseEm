@@ -1,0 +1,46 @@
+.breadcrumb_wrapper {
+  width: 97%;
+  position: relative;
+  background-color: #eee;
+  padding: 1px;
+  margin-bottom: 2em;
+}
+
+.breadcrumb {
+  top: -0.7em;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  border-radius: 50%;
+  border: 0.5px solid #eed;
+  font-weight: bold;
+
+  text-align: center;
+}
+
+.white_color {
+  color: #fff;
+}
+
+.blue_color {
+  color: rgb(0, 123, 255);
+}
+
+.breadcrumb_1 {
+  left: 0;
+  background-color: #eee;
+}
+
+.breadcrumb_2 {
+  left: 50%;
+  background-color: #eee;
+}
+
+.breadcrumb_3 {
+  left: 100%;
+  background-color: #eee;
+}
+
+.completed_color {
+  background-color: rgb(0, 123, 255);
+}

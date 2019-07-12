@@ -1,0 +1,13 @@
+.flex_column {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.row_custom {
+  width: 100%;
+}
+
+.navbar_custom {
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 3em;
+}

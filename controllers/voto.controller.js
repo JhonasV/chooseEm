@@ -26,7 +26,7 @@ exports.getAllVotos = async (req, res, next) => {
 
 exports.voterRegister = async (req, res, next) => {
   try {
-    //Buscamos el votante con el DNI ingresado
+    //Buscamos el votante con el ID ingresado
     let votanteInfo = await Votante.findOne({
       dni: req.body.dni
     });
@@ -73,7 +73,6 @@ exports.vote = async (req, res, next) => {
     sexo: req.body.sex
   };
 
-  console.log(data);
   try {
     //Buscamos en la colección de votantes si ese DNI ya existe
     let voteExists = await Votante.findOne({
@@ -84,7 +83,7 @@ exports.vote = async (req, res, next) => {
       res.json({
         voto: true,
         alreadyVote: true,
-        message: "Ya ha votado"
+        message: "Has already voted before."
       });
     } else {
       //De lo contario se agrega el voto y le permitimos al usuario continuar
@@ -94,7 +93,7 @@ exports.vote = async (req, res, next) => {
       res.json({
         voto: false,
         alreadyVote: false,
-        message: "Continue al voto",
+        message: "Continue with the vote!",
         dni: newVotante.dni
       });
     }
@@ -102,7 +101,7 @@ exports.vote = async (req, res, next) => {
     next();
   } catch (err) {
     //Retornamos un json con el error 500 "Error del servidor"
-    console.log(err);
+    console.error(err);
     res
       .json({
         voto: false,
