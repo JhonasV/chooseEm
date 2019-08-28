@@ -164,7 +164,7 @@ const ReviewForm = ({
             candidate_party={values.candidate.candidate_party}
             candidate_avatar={values.candidate.candidate_avatar}
             is_checked={true}
-            is_review={true}
+            is_review={false}
             values={values}
           />
         </Col>
