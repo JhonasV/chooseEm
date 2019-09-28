@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Button } from "shards-react";
-
+import Loading from "../Loading";
 import style from "./CandidateForm.module.css";
 import CandidateCard from "../CandidateCard/CandidateCard";
 
@@ -20,7 +20,13 @@ const Form = ({ prevStep, nextStep, values, setGeneralValues, candidates }) => {
 
   const renderCandidates = () => {
     return candidates.map(candidate => (
-      <Col key={candidate._id}>
+      <Col
+        key={candidate._id}
+        sm={12}
+        md={6}
+        lg={4}
+        className="mb-3 ml-auto mr-auto"
+      >
         <CandidateCard
           id={candidate._id}
           candidate_name={candidate.nombre_candidato}
@@ -29,6 +35,7 @@ const Form = ({ prevStep, nextStep, values, setGeneralValues, candidates }) => {
           is_checked={values.candidate.id === candidate._id}
           setFormValues={handleGeneralValuesChange}
           is_review={false}
+          is_confirm={true}
           values={values}
         />
       </Col>
@@ -36,29 +43,37 @@ const Form = ({ prevStep, nextStep, values, setGeneralValues, candidates }) => {
   };
 
   return (
-    <div>
-      <h4>Choose a candidate!</h4>
+    <div className={"bg-primary-custom"}>
+      <h4 className="text-white font-weight-bold">Choose a candidate!</h4>
       <hr />
-      <div>
-        <Row>{renderCandidates()}</Row>
+      <div className="form-styles-custom">
+        <Row>
+          {candidates ? (
+            renderCandidates()
+          ) : (
+            <Loading active={candidates ? false : true} />
+          )}
+        </Row>
         <hr />
         <div>
-          <Row style={{ padding: "15px" }}>
-            <Col className={style.col_style}>
+          <Row>
+            <Col sm={12} md={6} lg={4} className="mb-3">
               <Button
-                style={{ width: "25%" }}
+                className="btn-block"
                 theme="primary"
                 onClick={handlePrevStep}
               >
-                Go Back
+                <i class="fas fa-arrow-circle-left"></i> Go Back
               </Button>
+            </Col>
+            <Col sm={12} md={6} lg={4} className="mb-3">
               <Button
-                style={{ width: "25%", marginLeft: "5px" }}
+                className="btn-block"
                 theme="success"
                 disabled={values.candidate.id ? false : true}
                 onClick={nextStep}
               >
-                Review information
+                <i class="fas fa-search"></i> Review information
               </Button>
             </Col>
           </Row>

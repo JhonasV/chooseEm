@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
 }
 
 code {
@@ -26,4 +27,21 @@ code {
   height: 100%;
   border: 1px solid #eee;
   padding: 20px;
+}
+
+.bg-primary-custom {
+  background-color: rgb(0, 184, 148);
+}
+
+.form-styles-custom {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 13px;
+}
+
+.card-sizes {
+  max-width: 300px;
+  min-height: 325px;
+  max-height: 450px;
+  height: 425px;
 }

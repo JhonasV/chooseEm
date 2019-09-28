@@ -7,7 +7,7 @@ import Statistics from "./components/Statistics/Statistics";
 const URL = "/api/partido";
 export default class App extends Component {
   state = {
-    candidates: []
+    candidates: null
   };
 
   fetchCandidates = async () => {

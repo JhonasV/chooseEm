@@ -15,7 +15,7 @@ const Breadcrumb = ({ currentStep }) => {
         //If the current step is equal or bigger than the bread number the color is going to be blue and the number white
         //if else the color is white and number blue.
         let white_color = "#fff";
-        let blue_color = "rgb(0, 123, 255)";
+        let blue_color = "#00B8D8";
         let isStepReady = currentStep >= bread.step;
         return (
           <div

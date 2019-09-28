@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
+import Loading from "../Loading";
 import {
   Form as FormShard,
   FormGroup,
@@ -14,7 +15,8 @@ import {
 import style from "./VoterForm.module.css";
 const genreOptions = [
   { value: "m", name: "Male" },
-  { value: "f", name: "female" }
+  { value: "f", name: "female" },
+  { value: "other", name: "other" }
 ];
 const Form = ({ nextStep, setGeneralValues, values }) => {
   const [isDisable, setIsDisable] = useState(
@@ -70,6 +72,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
       setAlertState("warning");
 
       setAlertMessage(data.message);
+      setLoading(false);
       return;
     }
     setCanContinue(false);
@@ -99,7 +102,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
   return (
     <div>
       <div>
-        <h4>Voter Registration</h4>
+        <h4 className="text-white font-weight-bold">Voter Registration</h4>
         {alertMessage.length > 0 ? (
           <Alert theme={alertState}>
             <span>{alertMessage}</span>
@@ -110,11 +113,11 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
         <hr />
         <div>
           <FormShard
-            style={{ backgroundColor: "#fff", padding: "15px" }}
+            className={"form-styles-custom"}
             onSubmit={handleFormSubmit}
           >
             <Row>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <FormGroup>
                   <label>Name </label>
                   <FormInput
@@ -133,7 +136,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
                   />
                 </FormGroup>
               </Col>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <FormGroup>
                   <label>ID</label>
                   <FormInput
@@ -154,7 +157,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <FormGroup>
                   <label>Sex </label>
                   <FormSelect
@@ -178,7 +181,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
                   </FormSelect>
                 </FormGroup>
               </Col>
-              <Col>
+              <Col sm={12} md={12} lg={6}>
                 <FormGroup>
                   <label>Birthdate </label>
                   <FormInput
@@ -200,40 +203,41 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
             <hr />
 
             <div>
-              <Row
-                className={style.buttonContainer}
-                style={{ padding: "15px" }}
-              >
-                <Col>
+              {/* <Row>
+                <Col sm={12} md={12} lg={6}>
                   {isLoading ? (
                     <Loader
                       className={style.loaderMargin}
                       type="Triangle"
                       color="#00BFFF"
-                      height="100"
-                      width="100"
+                      height="50"
+                      width="50"
                     />
                   ) : null}
                 </Col>
-                <Col className={"col_style"}>
+              </Row> */}
+              <Row
+                className={style.buttonContainer}
+                style={{ padding: "15px" }}
+              >
+                <Col sm={12} md={12} lg={6} className="mb-2">
                   <Button
-                    style={{ width: "25%", textAlign: "center" }}
+                    className="btn btn-block text-nowrap text-weight-bold"
                     theme="primary"
                     disabled={isDisable || values.voterFormReadOnly}
                   >
-                    Confirm
+                    <Loading active={isLoading} button={true} />{" "}
+                    <i class="far fa-check-circle"></i> Confirm
                   </Button>
+                </Col>
+                <Col sm={12} md={12} lg={6} className="mb-2">
                   <Button
-                    style={{
-                      width: "25%",
-                      marginLeft: "5px",
-                      textAlign: "center"
-                    }}
+                    className="text-center btn-block text-weight-bold"
                     theme="success"
                     disabled={canContinue}
                     onClick={handleContinue}
                   >
-                    Continue
+                    <i class="fas fa-arrow-circle-right"></i> Continue
                   </Button>
                 </Col>
               </Row>

@@ -68,7 +68,13 @@ const Home = ({ candidates }) => {
     }
   };
   return (
-    <div className={`${style.vh_size} ${style.vp_border}`}>
+    <div
+      // className={`${style.vh_size} ${style.vp_border}`}
+      className={`px-5 py-3 ${style.vp_border} bg-primary-custom`}
+      // style={{ border: "3px solid black" }}
+      // style={{ backgroundColor: "#00B894" }}
+      // style={{ backgroundColor: "rgb(0, 184, 148)" }}
+    >
       <Breadcrumb currentStep={step} />
       {renderStep(step)}
     </div>

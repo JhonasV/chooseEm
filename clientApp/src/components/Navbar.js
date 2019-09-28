@@ -1,46 +1,69 @@
-import React from "react";
-import style from "./Navbar.module.css";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink as NavLinkDom } from "react-router-dom";
+import "./Navbar.module.css";
 import {
-  Navbar as NavbarShards,
-  Container,
+  Navbar,
+  NavbarToggler,
   NavbarBrand,
-  Col,
-  Row,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Collapse,
+  Container
 } from "shards-react";
-const Navbar = () => {
+
+const NavBar = props => {
+  const [isCollapseOpen, setCollapseOpen] = useState(false);
+
   return (
-    <div>
-      <NavbarShards full className={style.navbar_custom}>
-        <Container>
-          <Row className={style.row_custom}>
-            <Col>
-              <NavbarBrand>
-                <Link to="/">ChooseEm</Link>
-              </NavbarBrand>
-            </Col>
-            <Col className={style.flex_column}>
-              <Nav>
-                <NavItem>
-                  <NavLink>
-                    <Link to="/">Vote Now!</Link>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink>
-                    <Link to="/charts">Charts</Link>
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </Col>
-          </Row>
-        </Container>
-      </NavbarShards>
-    </div>
+    <Navbar
+      type="dark"
+      // theme="info"
+      style={{ backgroundColor: "#00b894" }}
+      expand="md"
+    >
+      <Container>
+        <NavbarBrand>
+          {/* <NavLink> */}
+          <NavLinkDom
+            activeClassName="active-link"
+            className="font-weight-bold text-white"
+            to="/"
+          >
+            <i className="fas fa-child"></i> ChooseEm
+          </NavLinkDom>
+          {/* </NavLink> */}
+        </NavbarBrand>
+        <NavbarToggler onClick={() => setCollapseOpen(!isCollapseOpen)} />
+        <Collapse open={isCollapseOpen} navbar>
+          <Nav navbar className="ml-auto">
+            <NavItem>
+              {/* <NavLink> */}
+              <NavLinkDom
+                activeClassName="active-link"
+                className="font-weight-bold text-white mr-3"
+                to="/"
+              >
+                <i className="fas fa-vote-yea"></i> Vote Now!
+              </NavLinkDom>
+              {/* </NavLink> */}
+            </NavItem>
+            <NavItem>
+              {/* <NavLink> */}
+              <NavLinkDom
+                activeClassName="active-link"
+                className="font-weight-bold text-white mr-3"
+                to="/charts"
+              >
+                <i className="fas fa-chart-pie"></i> Charts
+              </NavLinkDom>
+              {/* </NavLink> */}
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default NavBar;

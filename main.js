@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const path = require("path");
 const cors = require("cors");
+
 const morgan = require("morgan");
 require("./models");
 require("./data/database");
@@ -23,9 +23,9 @@ require("./routes/voto.routes")(app);
 /*Archivos estaticos*/
 if (process.env.NODE_ENV == "production") {
   // app.use(express.static(path.join(__dirname, "public")));
-  app.use(express.static("client/build"));
-
   const path = require("path");
+  // app.use(express.static("client/build"));
+  app.use(express.static(path.resolve(__dirname, "./clientApp", "build")));
 
   app.get("*", (req, res) => {
     res.sendfile(path.resolve(__dirname, "client", "build", "index.html"));

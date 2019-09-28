@@ -8,6 +8,7 @@
   },
   "scripts": {
     "server": "nodemon src/main.js",
+    "start": "node main.js",
     "client": "npm run start --prefix clientApp",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },

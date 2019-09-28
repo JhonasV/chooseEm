@@ -17,27 +17,37 @@ const CandidateCard = ({
   is_checked,
   setFormValues,
   is_review,
-  voteStatictics
+  voteStatictics,
+  is_statistics,
+  is_confirm
 }) => {
+  const renderCardHeaderContent = (is_review, is_confirm, is_statistics) => {
+    if (is_statistics)
+      return <Progress value={voteStatictics}>{voteStatictics}</Progress>;
+
+    if (is_confirm)
+      return (
+        <FormRadio
+          candidate={id}
+          checked={is_checked}
+          onChange={() =>
+            setFormValues({
+              id,
+              candidate_name,
+              candidate_avatar,
+              candidate_party
+            })
+          }
+        />
+      );
+
+    if (is_review) return null;
+  };
+
   return (
-    <Card style={{ maxWidth: "300px" }}>
+    <Card className="ml-auto mr-auto card-sizes">
       <CardHeader>
-        {is_review === false ? (
-          <FormRadio
-            candidate={id}
-            checked={is_checked}
-            onChange={() =>
-              setFormValues({
-                id,
-                candidate_name,
-                candidate_avatar,
-                candidate_party
-              })
-            }
-          />
-        ) : (
-          <Progress value={voteStatictics}>{voteStatictics}</Progress>
-        )}
+        {renderCardHeaderContent(is_review, is_confirm, is_statistics)}
       </CardHeader>
       <CardImg src={candidate_avatar} />
       <CardBody>

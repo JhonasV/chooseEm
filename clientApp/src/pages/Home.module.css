@@ -4,6 +4,10 @@
 }
 
 .vp_border {
-  border: 1px solid #eee;
-  padding: 1.5rem;
+  border-radius: 13px;
+  border: 2px solid #eee;
+}
+
+.bg {
+  background-color: #74b9ff;
 }

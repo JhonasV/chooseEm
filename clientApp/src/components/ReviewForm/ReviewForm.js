@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Loader from "react-loader-spinner";
+import { Redirect } from "react-router-dom";
 import {
   Row,
   Col,
@@ -17,6 +17,7 @@ import {
 import CandidateCard from "../CandidateCard/CandidateCard";
 import { Link } from "react-router-dom";
 import style from "../VoterForm/VoterForm.module.css";
+import Loading from "../Loading";
 // const URL = "http://localhost:5000/api/voto";
 const genreOptions = [
   { value: "m", name: "Male" },
@@ -33,6 +34,8 @@ const ReviewForm = ({
   const [isVoteConfirmOpen, setVoteConfirmOpen] = useState(false);
   const [isDisable, setDisableOnDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const [redirectMessage, setRedirectMessage] = useState("");
   const sendVoteHandle = async () => {
     setIsLoading(true);
     const config = {
@@ -47,19 +50,12 @@ const ReviewForm = ({
       }
     };
     const response = await fetch(`/api/voto/seleccion`, config);
-
-    const data = await response.json();
-
-    const { voto } = data;
-    if (voto) {
-      localStorage.setItem("vote_proccessed", voto);
-      nextStep();
+    if (response.ok) {
+      setRedirect(true);
     }
+
     setIsLoading(false);
   };
-  // useEffect(() => {
-  //   OpenToggle(!isOpen);
-  // }, [isOpen]);
 
   const modalToggle = () => {
     OpenToggle(!isOpen);
@@ -98,9 +94,20 @@ const ReviewForm = ({
     modalToggle();
   };
 
+  if (redirect) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/charts",
+          state: { message: "Vote proccesed succesfully!" }
+        }}
+      />
+    );
+  }
+
   return (
-    <div>
-      <h4>Vote Review</h4>
+    <div className="bg-primary-custom">
+      <h4 className="text-white font-weight-bold">Vote Review</h4>
       <hr />
       {isDisable ? (
         <Alert theme={"warning"} key={1}>
@@ -110,68 +117,69 @@ const ReviewForm = ({
           </Button>
         </Alert>
       ) : null}
-      <Row>
-        <Col md="6">
-          <FormGroup>
-            <label>Name</label>
-            <FormInput
-              type="text"
-              name="name"
-              value={values.name}
-              disabled={true}
+      <div className={"form-styles-custom"}>
+        <Row>
+          <Col md="6">
+            <FormGroup>
+              <label>Name</label>
+              <FormInput
+                type="text"
+                name="name"
+                value={values.name}
+                disabled={true}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label>DNI</label>
+              <FormInput
+                type="number"
+                name="dni"
+                placeholder="Your dni"
+                disabled={true}
+                value={values.dni}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label>Sex</label>
+              <FormSelect name="sex" disabled={true} value={values.sex}>
+                <option value="">Choose the sex</option>
+                {genreOptions.map((genre, index) => (
+                  <option
+                    key={index}
+                    // selected={genre.value === formValues.sex}
+                    value={values.sex}
+                  >
+                    {genre.name}
+                  </option>
+                ))}
+              </FormSelect>
+            </FormGroup>
+            <FormGroup>
+              <label>Birthdate</label>
+              <FormInput
+                type="date"
+                name="birthdate"
+                disabled={true}
+                value={values.birthdate}
+              />
+            </FormGroup>
+          </Col>
+          {/* <Col md="2" sm="2" lg="2" /> */}
+          <Col md="4 ml-auto mr-auto">
+            <CandidateCard
+              id={values.candidate.id}
+              candidate_name={values.candidate.candidate_name}
+              candidate_party={values.candidate.candidate_party}
+              candidate_avatar={values.candidate.candidate_avatar}
+              is_checked={false}
+              is_review={true}
+              values={values}
             />
-          </FormGroup>
-          <FormGroup>
-            <label>DNI</label>
-            <FormInput
-              type="number"
-              name="dni"
-              placeholder="Your dni"
-              disabled={true}
-              value={values.dni}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Sex</label>
-            <FormSelect name="sex" disabled={true} value={values.sex}>
-              <option value="">Choose the sex</option>
-              {genreOptions.map((genre, index) => (
-                <option
-                  key={index}
-                  // selected={genre.value === formValues.sex}
-                  value={values.sex}
-                >
-                  {genre.name}
-                </option>
-              ))}
-            </FormSelect>
-          </FormGroup>
-          <FormGroup>
-            <label>Birthdate</label>
-            <FormInput
-              type="date"
-              name="birthdate"
-              disabled={true}
-              value={values.birthdate}
-            />
-          </FormGroup>
-        </Col>
-        <Col md="2" sm="2" lg="2" />
-        <Col md="4">
-          <CandidateCard
-            id={values.candidate.id}
-            candidate_name={values.candidate.candidate_name}
-            candidate_party={values.candidate.candidate_party}
-            candidate_avatar={values.candidate.candidate_avatar}
-            is_checked={true}
-            is_review={true}
-            values={values}
-          />
-        </Col>
-      </Row>
-      <div>
-        <Row className={"col_style"} style={{ padding: "15px" }}>
-          <Col>
+          </Col>
+        </Row>
+        <div>
+          <Row className="py-5 px-5">
+            {/* <Col className="mt-2 mb-2">
             {isLoading ? (
               <Loader
                 className={style.loaderMargin}
@@ -181,42 +189,49 @@ const ReviewForm = ({
                 width="100"
               />
             ) : null}
-          </Col>
-          <Col>
-            <Button
-              onClick={modalToggle}
-              style={{ width: "25%", marginRight: "5px" }}
-              theme="danger"
-              disabled={isDisable}
-            >
-              Cancel attemp
-            </Button>
-            <Button
-              disabled={isDisable}
-              style={{ width: "25%" }}
-              theme="primary"
-              onClick={prevStep}
-            >
-              Go Back
-            </Button>
-            <Button
-              style={{ width: "25%", marginLeft: "5px" }}
-              theme="success"
-              onClick={confirmVoteModalToggle}
-              disabled={isDisable}
-            >
-              Finish
-            </Button>
-          </Col>
-        </Row>
-
+          </Col> */}
+            <Col className="mt-2 mb-2 w-100">
+              <Button
+                onClick={modalToggle}
+                // style={{ width: "35%", marginRight: "5px" }}
+                theme="danger"
+                disabled={isDisable}
+                className="text-nowrap btn-block"
+              >
+                <i class="fas fa-window-close"></i> Cancel attemp
+              </Button>
+            </Col>
+            <Col className="mt-2 mb-2">
+              <Button
+                disabled={isDisable}
+                // style={{ width: "25%" }}
+                className="text-nowrap btn-block"
+                theme="primary"
+                onClick={prevStep}
+              >
+                <i class="fas fa-arrow-circle-left"></i> Go Back
+              </Button>
+            </Col>
+            <Col className="mt-2 mb-2">
+              <Button
+                // style={{ width: "25%", marginLeft: "5px" }}
+                theme="success"
+                className="text-nowrap btn-block"
+                onClick={confirmVoteModalToggle}
+                disabled={isDisable}
+              >
+                <i class="fas fa-user-check"></i> Finish
+              </Button>
+            </Col>
+          </Row>
+        </div>
         {/* Confirmation Modal */}
         <Modal open={isOpen} toggle={modalToggle}>
           <ModalHeader>Vote Cancel Confirmation</ModalHeader>
           <ModalBody>Are you sure to cancel the vote attemp?</ModalBody>
           <ModalFooter>
             <Button onClick={cancelVote} theme="secondary">
-              Confirm
+              <Loading active={isLoading} button={true} /> Confirm
             </Button>
             <Button onClick={modalToggle} theme="primary">
               Close
@@ -229,7 +244,7 @@ const ReviewForm = ({
           <ModalBody>Are you sure to submit the vote attemp?</ModalBody>
           <ModalFooter>
             <Button onClick={sendVoteHandle} theme="secondary">
-              Confirm
+              <Loading active={isLoading} button={true} /> Confirm
             </Button>
             <Button onClick={confirmVoteModalToggle} theme="primary">
               Close

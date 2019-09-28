@@ -1,73 +1,75 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Alert } from "shards-react";
-import Loader from "react-loader-spinner";
+
 // import { Row, Col, Alert, Button } from "shards-react";
 import CandidateCard from "../CandidateCard/CandidateCard";
-import style from "../VoterForm/VoterForm.module.css";
-const URL = "http://localhost:5000/api/voto/estadisticas";
-export default class Statistics extends Component {
-  state = { parties: [], isLoading: true };
-  renderCandidates = () => {
-    const { parties, isLoading } = this.state;
+import Loading from "../Loading";
+const Statistics = ({ location, history }) => {
+  const [parties, setParties] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const fetchStatictics = async () => {
+    setLoading(true);
+    const response = await fetch("/api/voto/estadisticas");
+    const data = await response.json();
+
+    setParties(data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    const getAsync = async () => await fetchStatictics();
+    getAsync();
+
+    if (message === "") {
+      setMessage(location.state ? location.state.message : "");
+    } else {
+      history.replace();
+    }
+  }, [location.state, history, message]);
+
+  const renderCandidates = () => {
     return parties.map(partyCandidate => (
-      <Col key={partyCandidate.partido._id}>
-        {isLoading ? (
-          <Loader
-            // className={style.loaderMargin}
-            type="Triangle"
-            color="#00BFFF"
-            height="100"
-            width="100"
-          />
-        ) : (
-          <CandidateCard
-            id={partyCandidate.partido._id}
-            candidate_name={partyCandidate.partido.nombre_candidato}
-            candidate_party={partyCandidate.partido.nombre_partido}
-            candidate_avatar={partyCandidate.partido.avatar_candidato}
-            is_checked={true}
-            is_review={true}
-            voteStatictics={partyCandidate.porcentaje}
-          />
-        )}
+      <Col
+        key={partyCandidate.partido._id}
+        sm={12}
+        md={6}
+        lg={4}
+        className={"mb-3"}
+      >
+        <CandidateCard
+          id={partyCandidate.partido._id}
+          candidate_name={partyCandidate.partido.nombre_candidato}
+          candidate_party={partyCandidate.partido.nombre_partido}
+          candidate_avatar={partyCandidate.partido.avatar_candidato}
+          is_checked={false}
+          is_review={false}
+          is_statistics={true}
+          voteStatictics={partyCandidate.porcentaje}
+        />
       </Col>
     ));
   };
-  fetchStatictics = async () => {
-    // const { values } = this.props;
-    const response = await fetch("/api/voto/estadisticas");
-    const data = await response.json();
-    this.setState({ parties: data, isLoading: false });
-  };
-  componentDidMount() {
-    this.fetchStatictics();
-  }
 
-  render() {
-    const is_vote_proccessed = localStorage.getItem("vote_proccessed");
+  // const is_vote_proccessed = localStorage.getItem("vote_proccessed");
 
-    // const { setStep } = this.props;
-    return (
+  return (
+    <div>
+      <h5>Top Charts</h5>
+      {message !== "" ? (
+        <Alert theme={"success"} key={1}>
+          <span>{message}</span>
+        </Alert>
+      ) : null}
+      <hr />
       <div>
-        <h5>Top Charts</h5>
-        {is_vote_proccessed && this.state.parties.length > 0
-          ? [
-              <Alert theme={"success"} key={1}>
-                <span>Vote proccesed succesfully!</span>
-              </Alert>,
-              window.localStorage.removeItem("vote_proccessed")
-            ]
-          : null}
-
-        {/* <Button onClick={() => setStep(1)} theme="secondary">
-          Go back to the start
-        </Button> */}
+        <Row className="ml-auto mr-auto">
+          {isLoading ? <Loading active={isLoading} /> : renderCandidates()}
+        </Row>
         <hr />
-        <div>
-          <Row>{this.renderCandidates()}</Row>
-          <hr />
-        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Statistics;
