@@ -12,7 +12,6 @@ import {
   Alert
 } from "shards-react";
 
-import style from "./VoterForm.module.css";
 const genreOptions = [
   { value: "m", name: "Male" },
   { value: "f", name: "female" },
@@ -105,19 +104,21 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
         <h4 className="text-white font-weight-bold">Voter Registration</h4>
         {alertMessage.length > 0 ? (
           <Alert theme={alertState}>
-            <span>{alertMessage}</span>
+            <span className={"text-white font-weight-bold"}>
+              {alertMessage}
+            </span>
           </Alert>
         ) : (
           ""
         )}
-        <hr />
+
         <div>
           <FormShard
             className={"form-styles-custom"}
             onSubmit={handleFormSubmit}
           >
             <Row>
-              <Col sm={12} md={12} lg={6}>
+              <Col sm={12} md={12} lg={8} className="ml-auto mr-auto">
                 <FormGroup>
                   <label>Name </label>
                   <FormInput
@@ -136,12 +137,14 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
                   />
                 </FormGroup>
               </Col>
-              <Col sm={12} md={12} lg={6}>
+            </Row>
+            <Row>
+              <Col sm={12} md={12} lg={8} className="ml-auto mr-auto">
                 <FormGroup>
                   <label>ID</label>
                   <FormInput
                     autoComplete="off"
-                    type="number"
+                    type="text"
                     name="dni"
                     onChange={e =>
                       setGeneralValues({
@@ -157,7 +160,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
               </Col>
             </Row>
             <Row>
-              <Col sm={12} md={12} lg={6}>
+              <Col sm={12} md={12} lg={8} className="ml-auto mr-auto">
                 <FormGroup>
                   <label>Sex </label>
                   <FormSelect
@@ -181,7 +184,9 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
                   </FormSelect>
                 </FormGroup>
               </Col>
-              <Col sm={12} md={12} lg={6}>
+            </Row>
+            <Row>
+              <Col sm={12} md={12} lg={8} className="ml-auto mr-auto">
                 <FormGroup>
                   <label>Birthdate </label>
                   <FormInput
@@ -217,7 +222,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
                 </Col>
               </Row> */}
               <Row
-                className={style.buttonContainer}
+                // className={style.buttonContainer}
                 style={{ padding: "15px" }}
               >
                 <Col sm={12} md={12} lg={6} className="mb-2">
@@ -227,7 +232,7 @@ const Form = ({ nextStep, setGeneralValues, values }) => {
                     disabled={isDisable || values.voterFormReadOnly}
                   >
                     <Loading active={isLoading} button={true} />{" "}
-                    <i class="far fa-check-circle"></i> Confirm
+                    <i className="far fa-check-circle"></i> Confirm
                   </Button>
                 </Col>
                 <Col sm={12} md={12} lg={6} className="mb-2">

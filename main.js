@@ -1,9 +1,8 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
 
 const morgan = require("morgan");
-require("./models");
+require("./models/v1");
 require("./data/database");
 require("./data/inicializador");
 
@@ -18,8 +17,7 @@ app.use(morgan("dev"));
 /** */
 
 /*Rutas*/
-require("./routes/partido.routes")(app);
-require("./routes/voto.routes")(app);
+require("./routes/v1")(app);
 /*Archivos estaticos*/
 if (process.env.NODE_ENV == "production") {
   // app.use(express.static(path.join(__dirname, "public")));

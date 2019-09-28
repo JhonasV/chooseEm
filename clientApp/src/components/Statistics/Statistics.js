@@ -58,7 +58,7 @@ const Statistics = ({ location, history }) => {
       <h5>Top Charts</h5>
       {message !== "" ? (
         <Alert theme={"success"} key={1}>
-          <span>{message}</span>
+          <span className="text-white font-weight-bold">{message}</span>
         </Alert>
       ) : null}
       <hr />

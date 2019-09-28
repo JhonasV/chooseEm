@@ -1,3 +1,10 @@
+const db_credentials = {
+  user_db: "db_user",
+  password_db: "hola1234",
+  collection_db: "voteapp"
+};
+
 module.exports = {
-	DATABASE_URI: 'mongodb://localhost:27017/elecciones'
+  // DATABASE_URI: `mongodb://${db_credentials.user_db}:${db_credentials.password_db}@ds139632.mlab.com:39632/${db_credentials.collection_db}`
+  DATABASE_URI: "mongodb://127.0.0.1:27017/voteApp"
 };

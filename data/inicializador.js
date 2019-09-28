@@ -24,6 +24,9 @@ const inicializarPartidos = () => {
   }).save();
 };
 
-// if (new partido.find().any()) {
-//   //inicializarPartidos();
-// }
+partido
+  .find()
+  .then(res => {
+    if (res.length === 0) inicializarPartidos();
+  })
+  .catch(err => console.error(err));

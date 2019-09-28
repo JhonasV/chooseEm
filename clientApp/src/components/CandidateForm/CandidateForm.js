@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Button } from "shards-react";
 import Loading from "../Loading";
-import style from "./CandidateForm.module.css";
 import CandidateCard from "../CandidateCard/CandidateCard";
 
 const Form = ({ prevStep, nextStep, values, setGeneralValues, candidates }) => {

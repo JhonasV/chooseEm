@@ -1,5 +1,5 @@
 module.exports = app => {
-  const controller = require("../controllers/voto.controller");
+  const controller = require("../../controllers/v1/voto.controller");
   app.get("/api/voto", controller.getAllVotos);
 
   app.post("/api/voto/seleccion", controller.voterRegister);

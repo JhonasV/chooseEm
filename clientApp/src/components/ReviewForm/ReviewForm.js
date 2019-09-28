@@ -15,27 +15,18 @@ import {
 } from "shards-react";
 // import ConfirmComponent from "../ConfirmComponent";
 import CandidateCard from "../CandidateCard/CandidateCard";
-import { Link } from "react-router-dom";
-import style from "../VoterForm/VoterForm.module.css";
 import Loading from "../Loading";
 // const URL = "http://localhost:5000/api/voto";
 const genreOptions = [
   { value: "m", name: "Male" },
   { value: "f", name: "female" }
 ];
-const ReviewForm = ({
-  values,
-  setStep,
-  prevStep,
-  nextStep,
-  setGeneralValues
-}) => {
+const ReviewForm = ({ values, setStep, prevStep, setGeneralValues }) => {
   const [isOpen, OpenToggle] = useState(false);
   const [isVoteConfirmOpen, setVoteConfirmOpen] = useState(false);
   const [isDisable, setDisableOnDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const [redirectMessage, setRedirectMessage] = useState("");
   const sendVoteHandle = async () => {
     setIsLoading(true);
     const config = {
@@ -132,7 +123,7 @@ const ReviewForm = ({
             <FormGroup>
               <label>DNI</label>
               <FormInput
-                type="number"
+                type="text"
                 name="dni"
                 placeholder="Your dni"
                 disabled={true}
@@ -179,21 +170,9 @@ const ReviewForm = ({
         </Row>
         <div>
           <Row className="py-5 px-5">
-            {/* <Col className="mt-2 mb-2">
-            {isLoading ? (
-              <Loader
-                className={style.loaderMargin}
-                type="Triangle"
-                color="#00BFFF"
-                height="100"
-                width="100"
-              />
-            ) : null}
-          </Col> */}
             <Col className="mt-2 mb-2 w-100">
               <Button
                 onClick={modalToggle}
-                // style={{ width: "35%", marginRight: "5px" }}
                 theme="danger"
                 disabled={isDisable}
                 className="text-nowrap btn-block"
@@ -204,7 +183,6 @@ const ReviewForm = ({
             <Col className="mt-2 mb-2">
               <Button
                 disabled={isDisable}
-                // style={{ width: "25%" }}
                 className="text-nowrap btn-block"
                 theme="primary"
                 onClick={prevStep}
@@ -214,7 +192,6 @@ const ReviewForm = ({
             </Col>
             <Col className="mt-2 mb-2">
               <Button
-                // style={{ width: "25%", marginLeft: "5px" }}
                 theme="success"
                 className="text-nowrap btn-block"
                 onClick={confirmVoteModalToggle}

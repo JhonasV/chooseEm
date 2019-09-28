@@ -45,3 +45,12 @@ code {
   max-height: 450px;
   height: 425px;
 }
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.text_red {
+  color: red;
+}
