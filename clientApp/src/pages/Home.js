@@ -6,9 +6,9 @@ import VoterForm from "../components/VoterForm/VoterForm";
 import CandidateForm from "../components/CandidateForm/CandidateForm";
 import ReviewForm from "../components/ReviewForm/ReviewForm";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-
+import Presentation from "../components/Presentation";
 const Home = ({ candidates }) => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [generalValues, setGeneralValues] = useState({
     name: "",
     dni: "",
@@ -29,6 +29,8 @@ const Home = ({ candidates }) => {
 
   const renderStep = step => {
     switch (step) {
+      case 0:
+        return <Presentation nextStep={nextFormStep} />;
       case 1:
         return (
           <VoterForm
@@ -68,8 +70,12 @@ const Home = ({ candidates }) => {
     }
   };
   return (
-    <div className={`px-5 py-3 ${style.vp_border} bg-primary-custom mb-5`}>
-      <Breadcrumb currentStep={step} />
+    <div
+      className={
+        step === 0 ? "" : `px-5 py-3 ${style.vp_border} bg-primary-custom mb-5`
+      }
+    >
+      {step === 0 ? null : <Breadcrumb currentStep={step} />}
       {renderStep(step)}
     </div>
   );

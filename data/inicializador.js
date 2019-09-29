@@ -1,32 +1,25 @@
 const mongoose = require("mongoose");
 const partido = mongoose.model("Partido");
 
-const inicializarPartidos = () => {
+const seedParties = () => {
   new partido({
-    nombre_partido: "Cambiemos",
-    nombre_candidato: "Mauricio Macri",
+    nombre_partido: "Money Money",
+    nombre_candidato: "Batman",
     avatar_candidato:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Presidente_Macri_en_el_Sillon_de_Rivadavia_%28cropped%29.jpg/156px-Presidente_Macri_en_el_Sillon_de_Rivadavia_%28cropped%29.jpg"
+      "https://i.pinimg.com/originals/9f/95/1c/9f951c3b62fd23c4c7d051f768ef442e.jpg"
   }).save();
 
   new partido({
-    nombre_partido: "Unidad Ciudadana",
-    nombre_candidato: "Cristina Fernández de Kirchner",
+    nombre_partido: "Money Money x2",
+    nombre_candidato: "Lex Luthor",
     avatar_candidato:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Cristinakirchnermensaje2010.jpg/162px-Cristinakirchnermensaje2010.jpg"
-  }).save();
-
-  new partido({
-    nombre_partido: "Peronismo Federal",
-    nombre_candidato: "Miguel Ángel Pichetto",
-    avatar_candidato:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/M._Pichetto.jpg/166px-M._Pichetto.jpg"
+      "https://images-na.ssl-images-amazon.com/images/I/41%2BhWz5tZLL._SX319_BO1,204,203,200_.jpg"
   }).save();
 };
 
 partido
   .find()
   .then(res => {
-    if (res.length === 0) inicializarPartidos();
+    if (res.length === 0) seedParties();
   })
   .catch(err => console.error(err));

@@ -121,7 +121,7 @@ const ReviewForm = ({ values, setStep, prevStep, setGeneralValues }) => {
               />
             </FormGroup>
             <FormGroup>
-              <label>DNI</label>
+              <label>ID</label>
               <FormInput
                 type="text"
                 name="dni"
@@ -177,7 +177,7 @@ const ReviewForm = ({ values, setStep, prevStep, setGeneralValues }) => {
                 disabled={isDisable}
                 className="text-nowrap btn-block"
               >
-                <i class="fas fa-window-close"></i> Cancel attemp
+                <i class="fas fa-window-close"></i> Cancel
               </Button>
             </Col>
             <Col className="mt-2 mb-2">
@@ -187,7 +187,7 @@ const ReviewForm = ({ values, setStep, prevStep, setGeneralValues }) => {
                 theme="primary"
                 onClick={prevStep}
               >
-                <i class="fas fa-arrow-circle-left"></i> Go Back
+                <i class="fas fa-arrow-circle-left"></i> Back
               </Button>
             </Col>
             <Col className="mt-2 mb-2">
@@ -197,7 +197,7 @@ const ReviewForm = ({ values, setStep, prevStep, setGeneralValues }) => {
                 onClick={confirmVoteModalToggle}
                 disabled={isDisable}
               >
-                <i class="fas fa-user-check"></i> Finish
+                <i class="fas fa-user-check"></i> Submit
               </Button>
             </Col>
           </Row>
