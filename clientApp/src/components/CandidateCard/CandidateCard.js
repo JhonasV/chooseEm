@@ -49,7 +49,10 @@ const CandidateCard = ({
       <CardHeader>
         {renderCardHeaderContent(is_review, is_confirm, is_statistics)}
       </CardHeader>
-      <CardImg src={candidate_avatar} />
+      <CardImg
+        src={candidate_avatar}
+        style={{ maxHeight: "270px", minHeight: "250px" }}
+      />
       <CardBody>
         <CardTitle>{candidate_party}</CardTitle>
         <p>{candidate_name}</p>
